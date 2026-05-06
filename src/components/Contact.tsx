@@ -1,15 +1,20 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useEffect, useState } from "react";
 import { Github, Linkedin, Mail, Copy, Check } from "lucide-react";
+import { fallbackContact } from "../data/fallbackData";
 
 export default function Contact() {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<any>(fallbackContact);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     fetch("/api/contact")
-      .then(res => res.json())
-      .then(d => setData(d));
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load contact");
+        return res.json();
+      })
+      .then((d) => setData(d ?? fallbackContact))
+      .catch(() => setData(fallbackContact));
   }, []);
 
   const copyToClipboard = () => {

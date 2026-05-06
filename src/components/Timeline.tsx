@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useEffect, useState, useRef } from "react";
+import { fallbackTimeline } from "../data/fallbackData";
 
 interface TimelineItem {
   year: string;
@@ -7,7 +8,7 @@ interface TimelineItem {
 }
 
 export default function Timeline() {
-  const [timeline, setTimeline] = useState<TimelineItem[]>([]);
+  const [timeline, setTimeline] = useState<TimelineItem[]>(fallbackTimeline);
   const containerRef = useRef<HTMLDivElement>(null);
   
   const { scrollYProgress } = useScroll({
@@ -19,8 +20,12 @@ export default function Timeline() {
 
   useEffect(() => {
     fetch("/api/timeline")
-      .then(res => res.json())
-      .then(data => setTimeline(data));
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load timeline");
+        return res.json();
+      })
+      .then((data) => setTimeline(Array.isArray(data) ? data : fallbackTimeline))
+      .catch(() => setTimeline(fallbackTimeline));
   }, []);
 
   return (

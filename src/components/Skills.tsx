@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { motion } from "motion/react";
+import { fallbackSkills } from "../data/fallbackData";
 
 interface SkillGroups {
   languages: string[];
@@ -10,13 +11,17 @@ interface SkillGroups {
 }
 
 export default function Skills() {
-  const [skills, setSkills] = useState<SkillGroups | null>(null);
+  const [skills, setSkills] = useState<SkillGroups | null>(fallbackSkills);
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch("/api/skills")
-      .then(res => res.json())
-      .then(data => setSkills(data));
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load skills");
+        return res.json();
+      })
+      .then((data) => setSkills(data ?? fallbackSkills))
+      .catch(() => setSkills(fallbackSkills));
   }, []);
 
   if (!skills) return null;

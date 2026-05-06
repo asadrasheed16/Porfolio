@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ExternalLink, Github, ArrowUpRight } from "lucide-react";
+import { fallbackProjects } from "../data/fallbackData";
 
 interface Project {
   id: string;
@@ -14,13 +15,17 @@ interface Project {
 }
 
 export default function Projects() {
-  const [projects, setProjects] = useState<Project[]>([]);
+  const [projects, setProjects] = useState<Project[]>(fallbackProjects);
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   useEffect(() => {
     fetch("/api/projects")
-      .then(res => res.json())
-      .then(data => setProjects(data));
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load projects");
+        return res.json();
+      })
+      .then((data) => setProjects(Array.isArray(data) ? data : fallbackProjects))
+      .catch(() => setProjects(fallbackProjects));
   }, []);
 
   return (

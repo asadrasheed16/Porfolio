@@ -1,14 +1,19 @@
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { Code2, Server, Database, Globe } from "lucide-react";
+import { fallbackAbout } from "../data/fallbackData";
 
 export default function About() {
-  const [aboutData, setAboutData] = useState<any>(null);
+  const [aboutData, setAboutData] = useState<any>(fallbackAbout);
 
   useEffect(() => {
     fetch("/api/about")
-      .then(res => res.json())
-      .then(data => setAboutData(data));
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load about");
+        return res.json();
+      })
+      .then((data) => setAboutData(data ?? fallbackAbout))
+      .catch(() => setAboutData(fallbackAbout));
   }, []);
 
   return (

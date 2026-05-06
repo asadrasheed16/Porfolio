@@ -11,6 +11,7 @@ import {
   Terminal,
   LucideIcon 
 } from "lucide-react";
+import { fallbackAIArsenal } from "../data/fallbackData";
 
 const iconMap: Record<string, LucideIcon> = {
   Cpu,
@@ -57,13 +58,17 @@ function GlitchText({ text }: { text: string }) {
 }
 
 export default function AIArsenal() {
-  const [tools, setTools] = useState<AITool[]>([]);
+  const [tools, setTools] = useState<AITool[]>(fallbackAIArsenal);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     fetch("/api/ai-arsenal")
-      .then(res => res.json())
-      .then(data => setTools(data));
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load AI arsenal");
+        return res.json();
+      })
+      .then((data) => setTools(Array.isArray(data) ? data : fallbackAIArsenal))
+      .catch(() => setTools(fallbackAIArsenal));
   }, []);
 
   return (
