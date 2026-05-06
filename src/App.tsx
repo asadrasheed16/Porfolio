@@ -75,10 +75,10 @@ export default function App() {
             <div className="flex-grow">
               <Hero />
               <About />
+              <Timeline />
               <Projects />
               <Skills />
               <AIArsenal />
-              <Timeline />
               <Contact />
             </div>
 
