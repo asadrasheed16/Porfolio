@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Syne:wght@700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Syne", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  --color-primary-bg: #09090B;
+  --color-secondary-bg: #18181B;
+  --color-tertiary-bg: #27272A;
+  --color-accent: #E2FF4D;
+  --color-text-primary: #FAFAFA;
+  --color-text-secondary: #A1A1AA;
+  --color-border: #27272A;
+  --color-system-border: #3F3F46;
+
+  --color-project-blue: #00D4FF;
+  --color-project-orange: #FF6B35;
+  --color-project-green: #00FF88;
+}
+
+@layer base {
+  body {
+    @apply bg-primary-bg text-text-primary font-sans antialiased selection:bg-accent selection:text-black;
+    cursor: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold uppercase tracking-tighter text-text-primary;
+  }
+}
+
+@layer utilities {
+  .glass-card {
+    @apply bg-secondary-bg border border-border transition-all duration-300;
+  }
+
+  .system-label {
+    @apply text-[10px] uppercase tracking-[0.4em] text-text-secondary/60;
+  }
+
+  .text-glow {
+    text-shadow: 0 0 15px currentColor;
+  }
+
+  .magnetic-area {
+    @apply relative flex items-center justify-center;
+    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+}
