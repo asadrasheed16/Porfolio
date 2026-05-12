@@ -54,7 +54,7 @@ export const skills = {
 };
 
 export const timeline = [
-  { year: "2024", event: "Healthcare AI FYP completed" },
+  { year: "2024-2026", event: "Healthcare AI FYP completed" },
   { year: "2023", event: "Gumnam Momina launch & scaling" },
   { year: "2023", event: "Backend specialization focus" },
   { year: "2022", event: "Started professional development journey" },

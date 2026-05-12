@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 async function startServer() {
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT || 5174;
 
   // Portfolio Data
   const developerData = {
@@ -55,15 +55,15 @@ async function startServer() {
   ];
 
   const skills = {
-    languages: ["JavaScript", "TypeScript", "Python", "SQL"],
-    frameworks: ["Node.js", "Express", "FastAPI", "React"],
-    databases: ["MongoDB", "PostgreSQL", "Redis"],
-    cloud: ["DigitalOcean", "Azure", "AWS"],
-    tools: ["Docker", "Git", "Postman", "Linux"]
+    languages: ["JavaScript", "C", "C++", "Java", "TypeScript"],
+    frameworks: ["React", "Express", "Node.js", "Vue"],
+    databases: ["MongoDB", "PostgreSQL"],
+    cloud: [], 
+    tools: ["Prisma", "Docker", "Git", "Postman"]
   };
 
   const timeline = [
-    { year: "2024", event: "Healthcare AI FYP completed" },
+    { year: "2024-2026", event: "Healthcare AI FYP completed" },
     { year: "2023", event: "Gumnam Momina launch & scaling" },
     { year: "2023", event: "Backend specialization focus" },
     { year: "2022", event: "Started professional development journey" }
@@ -75,6 +75,24 @@ async function startServer() {
       usage: "AI chatbot in Gumnam Momina retail store, generating product recommendations.",
       status: "In Production",
       icon: "Cpu"
+    },
+    {
+      name: "Wispr AI",
+      usage: "Integrated for high-accuracy, real-time voice-to-text transcription in hands-free web applications.",
+      status: "Actively Learning",
+      icon: "Activity"
+    },
+    {
+      name: "Kimi",
+      usage: "Leveraging ultra-long context windows for deep document analysis and automated project summarization.",
+      status: "Experimenting",
+      icon: "BrainCircuit"
+    },
+    {
+      name: "Seedance",
+      usage: "Exploring generative AI for dynamic video/audio creation and multimedia portfolio projects.",
+      status: "Experimenting",
+      icon: "Sparkles"
     },
     {
       name: "Azure Form Recognizer",
@@ -95,28 +113,10 @@ async function startServer() {
       icon: "Link"
     },
     {
-      name: "Hugging Face",
-      usage: "Exploration of open-source models, datasets, and fine-tuning research.",
-      status: "Experimenting",
-      icon: "BrainCircuit"
-    },
-    {
-      name: "GitHub Copilot",
-      usage: "Integrated into daily workflow for rapid prototyping and code optimization.",
-      status: "Actively Learning",
-      icon: "Bot"
-    },
-    {
       name: "Gemini",
       usage: "Prompt engineering and multimodal exploration with Google's latest models.",
       status: "Experimenting",
       icon: "Sparkles"
-    },
-    {
-      name: "Vercel AI SDK",
-      usage: "Implementing streaming AI responses and hook-based integrations in web apps.",
-      status: "Actively Learning",
-      icon: "Terminal"
     }
   ];
 
@@ -128,8 +128,9 @@ async function startServer() {
   app.get("/api/timeline", (req, res) => res.json(timeline));
   app.get("/api/contact", (req, res) => res.json({
     email: "asadrasheeddev@gmail.com",
-    github: "https://github.com/asadrasheed",
-    linkedin: "https://linkedin.com/in/asadrasheed",
+    github: "https://github.com/asadrasheed16",
+    linkedin: "https://www.linkedin.com/in/asadrasheed-",
+    whatsapp: "https://wa.me/qr/HE3URPPYKPB7C1",
     available: true
   }));
 

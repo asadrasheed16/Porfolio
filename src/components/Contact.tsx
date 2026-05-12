@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useEffect, useState } from "react";
-import { Github, Linkedin, Mail, Copy, Check } from "lucide-react";
+import { Github, Linkedin, Mail, Copy, Check, MessageCircle } from "lucide-react";
 import { fallbackContact } from "../data/fallbackData";
 
 export default function Contact() {
@@ -87,21 +87,26 @@ export default function Contact() {
           </AnimatePresence>
         </div>
 
-        <div className="flex gap-8 justify-center pt-12">
-           <a href={data?.github} target="_blank" className="p-4 glass-card rounded-full hover:bg-accent hover:text-black transition-all">
+        <div className="flex gap-4 sm:gap-8 justify-center pt-12">
+           <a href={data?.github} target="_blank" rel="noopener noreferrer" className="p-4 glass-card rounded-full hover:bg-accent hover:text-black transition-all">
               <Github size={24} />
            </a>
-           <a href={data?.linkedin} target="_blank" className="p-4 glass-card rounded-full hover:bg-accent hover:text-black transition-all">
+           <a href={data?.linkedin} target="_blank" rel="noopener noreferrer" className="p-4 glass-card rounded-full hover:bg-accent hover:text-black transition-all">
               <Linkedin size={24} />
            </a>
            <a href={`mailto:${data?.email}`} className="p-4 glass-card rounded-full hover:bg-accent hover:text-black transition-all">
               <Mail size={24} />
            </a>
+           {data?.whatsapp && (
+             <a href={data.whatsapp} target="_blank" rel="noopener noreferrer" className="p-4 glass-card rounded-full hover:bg-green-500 hover:text-black transition-all">
+                <MessageCircle size={24} />
+             </a>
+           )}
         </div>
       </div>
 
       <div className="absolute bottom-10 text-[10px] uppercase tracking-[0.4em] font-mono opacity-20">
-         © 2024 ASAD RASHEED · ARCHITECTING THE BACKEND
+         © 2024-2026 ASAD RASHEED · ARCHITECTING THE BACKEND
       </div>
     </section>
   );

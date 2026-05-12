@@ -31,35 +31,8 @@ interface AITool {
   icon: string;
 }
 
-function GlitchText({ text }: { text: string }) {
-  const [displayText, setDisplayText] = useState(text);
-  const chars = "!@#$%^&*()_+<>?:{}|[]";
-
-  useEffect(() => {
-    let iteration = 0;
-    const interval = setInterval(() => {
-      setDisplayText(prev => 
-        prev.split("")
-          .map((char, index) => {
-            if(index < iteration) return text[index];
-            return chars[Math.floor(Math.random() * chars.length)];
-          })
-          .join("")
-      );
-      
-      iteration += 1 / 3;
-      if (iteration >= text.length) clearInterval(interval);
-    }, 30);
-    
-    return () => clearInterval(interval);
-  }, [text]);
-
-  return <span>{displayText}</span>;
-}
-
 export default function AIArsenal() {
   const [tools, setTools] = useState<AITool[]>(fallbackAIArsenal);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     fetch("/api/ai-arsenal")
@@ -72,29 +45,29 @@ export default function AIArsenal() {
   }, []);
 
   return (
-    <section className="py-24 px-8 overflow-hidden bg-white/[0.05]" id="ai-arsenal">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-24 px-8 overflow-hidden relative" id="ai-arsenal">
+      <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Ticker */}
-        <div className="w-full overflow-hidden border-y border-border py-4 mb-24 rotate-[-1deg]">
+        <div className="w-full overflow-hidden border-y border-system-border py-4 mb-24 rotate-[-1deg] bg-secondary-bg/50 backdrop-blur-md">
           <motion.div 
             animate={{ x: [0, -1000] }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
             className="flex gap-12 whitespace-nowrap"
           >
             {[...Array(20)].map((_, i) => (
-              <span key={i} className="text-[10px] font-mono tracking-[0.5em] text-text-secondary/30 uppercase">
-                Exploring · Building · Shipping · 
+              <span key={i} className="text-sm font-mono tracking-widest text-text-secondary uppercase">
+                Exploring // Building // Shipping // 
               </span>
             ))}
           </motion.div>
         </div>
 
         <div className="text-center mb-24">
-          <h2 className="text-5xl md:text-8xl font-black tracking-tighter mb-6 uppercase text-text-primary">
-            <GlitchText text="AI ARSENAL" />
+          <h2 className="text-3xl md:text-5xl font-display tracking-widest mb-6 uppercase text-accent text-glow">
+            AI_ARSENAL
           </h2>
-          <p className="max-w-xl mx-auto text-sm md:text-base font-mono text-text-secondary uppercase leading-relaxed">
+          <p className="max-w-2xl mx-auto text-base md:text-lg font-mono text-text-primary uppercase leading-relaxed">
             I don't just use AI tools. I learn how they work and wire them into real projects.
           </p>
         </div>
@@ -103,58 +76,56 @@ export default function AIArsenal() {
           {tools.map((tool, i) => {
             const Icon = iconMap[tool.icon] || Cpu;
             return (
-              <div 
+              <motion.div 
                 key={tool.name}
-                className="group relative h-64 [perspective:1000px]"
-                onMouseEnter={() => setHoveredIndex(i)}
-                onMouseLeave={() => setHoveredIndex(null)}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="relative h-64 [perspective:1000px] group cursor-pointer"
               >
-                <motion.div 
-                  className={`relative w-full h-full transition-all duration-500 [transform-style:preserve-3d] ${hoveredIndex === i ? "[transform:rotateY(180deg)]" : ""}`}
+                <div 
+                  className="relative w-full h-full transition-transform duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"
                 >
                   {/* Front Side */}
-                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] glass-card p-8 flex flex-col items-center justify-center gap-6 border-border overflow-hidden">
-                     {/* Pulse Border */}
-                     <div className="absolute inset-x-0 top-0 h-[2px] bg-accent/30 animate-[pulse_2s_infinite]" />
+                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] glass-card p-6 flex flex-col justify-center items-center gap-4 border border-system-border group-hover:border-accent group-hover:shadow-[0_0_15px_rgba(0,255,255,0.2)] transition-all">
+                     <div className="absolute inset-x-0 top-0 h-1 bg-accent/30 scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
                      
-                     <div className="text-text-secondary transition-colors group-hover:text-accent">
-                        <Icon size={40} strokeWidth={1.5} />
+                     <div className="text-text-secondary drop-shadow-[0_0_8px_rgba(0,255,255,0.5)] transition-colors group-hover:text-accent">
+                        <Icon size={48} strokeWidth={1.5} />
                      </div>
-                     
-                     <div className="text-center">
-                        <h3 className="text-lg font-black tracking-tight mb-2 text-text-primary">{tool.name}</h3>
-                        <span className={`text-[9px] px-2 py-0.5 rounded-full font-mono uppercase font-bold ${
-                          tool.status === "In Production" ? "bg-green-500/20 text-green-400" : 
-                          tool.status === "Actively Learning" ? "bg-blue-500/20 text-blue-400" : 
-                          "bg-yellow-500/20 text-yellow-400"
-                        }`}>
-                          {tool.status}
-                        </span>
-                     </div>
+                     <h3 className="text-lg md:text-xl font-display tracking-wider text-text-primary uppercase font-semibold mt-2 text-center">{tool.name}</h3>
+                     <span className={`text-[10px] md:text-xs px-2 py-1 rounded-sm font-mono uppercase border mt-auto ${
+                       tool.status === "In Production" ? "bg-project-green/10 text-project-green border-project-green/50" : 
+                       tool.status === "Actively Learning" ? "bg-project-blue/10 text-project-blue border-project-blue/50" : 
+                       "bg-project-orange/10 text-project-orange border-project-orange/50"
+                     }`}>
+                       {tool.status}
+                     </span>
                   </div>
 
                   {/* Back Side */}
-                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-accent p-8 flex flex-col justify-center gap-4 text-black border border-accent">
-                     <h4 className="text-[10px] font-bold uppercase tracking-widest opacity-60">How I use this</h4>
-                     <p className="text-sm font-mono leading-relaxed font-bold">
+                  <div className="absolute inset-0 w-full h-full [backface-visibility:hidden] [transform:rotateY(180deg)] bg-[#ccff00] p-8 flex flex-col justify-start text-black shadow-[0_0_20px_rgba(204,255,0,0.3)]">
+                     <h4 className="text-[10px] md:text-xs font-mono font-bold uppercase tracking-widest mb-4 opacity-50">HOW I USE THIS</h4>
+                     <p className="text-sm md:text-base font-mono font-bold text-black leading-relaxed">
                         {tool.usage}
                      </p>
-                     <div className="absolute bottom-6 right-6">
-                        <Icon size={24} className="opacity-20" />
+                     <div className="absolute bottom-6 right-6 text-black opacity-10">
+                        <Icon size={32} />
                      </div>
                   </div>
-                </motion.div>
-              </div>
+                </div>
+              </motion.div>
             );
           })}
         </div>
 
-        <div className="mt-24 pt-12 border-t border-border flex flex-col md:flex-row justify-between items-center gap-8">
-           <div className="flex gap-4">
-              <div className="w-2 h-2 rounded-full bg-accent animate-ping" />
-              <span className="text-[10px] font-mono opacity-40 uppercase">Awaiting Next-Gen Integration</span>
+        <div className="mt-24 pt-12 border-t border-system-border flex flex-col md:flex-row justify-between items-center gap-8 bg-black/40 backdrop-blur-md p-6 rounded-sm">
+           <div className="flex items-center gap-4">
+              <div className="w-3 h-3 rounded-full bg-accent shadow-[0_0_10px_#00FFFF] animate-pulse" />
+              <span className="text-sm md:text-base font-display text-accent uppercase tracking-wider">Awaiting Next-Gen Integration</span>
            </div>
-           <div className="text-[10px] font-mono opacity-20 uppercase tracking-[0.2em]">
+           <div className="text-sm font-mono text-text-secondary uppercase tracking-widest">
               Real-world implementation over hype.
            </div>
         </div>

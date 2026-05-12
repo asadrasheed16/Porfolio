@@ -9,7 +9,6 @@ import Lenis from "lenis";
 
 import TerminalIntro from "./components/TerminalIntro";
 import ThreeBackground from "./components/ThreeBackground";
-import Cursor from "./components/Cursor";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Projects from "./components/Projects";
@@ -17,6 +16,10 @@ import Skills from "./components/Skills";
 import AIArsenal from "./components/AIArsenal";
 import Timeline from "./components/Timeline";
 import Contact from "./components/Contact";
+
+import Hobbies from "./components/Hobbies";
+import CurrentQuest from "./components/CurrentQuest";
+import ScrollRobot from "./components/ScrollRobot";
 
 export default function App() {
   const [phase, setPhase] = useState<"intro" | "portfolio">("intro");
@@ -42,7 +45,7 @@ export default function App() {
   }, [phase]);
 
   return (
-    <div className="relative min-h-screen bg-primary-bg selection:bg-accent selection:text-black">
+    <div className="relative min-h-screen bg-primary-bg selection:bg-accent selection:text-black font-sans">
       <AnimatePresence mode="wait">
         {phase === "intro" ? (
           <TerminalIntro key="intro" onComplete={() => setPhase("portfolio")} />
@@ -52,23 +55,23 @@ export default function App() {
              initial={{ opacity: 0 }}
              animate={{ opacity: 1 }}
              transition={{ duration: 1.5, ease: "easeOut" }}
-             className="relative z-10 border-4 border-system-border min-h-screen flex flex-col"
+             className="relative z-10 border-4 border-accent min-h-screen flex flex-col scanlines"
           >
-            <Cursor />
+            <ScrollRobot />
             <ThreeBackground />
             
-            {/* Editorial Header */}
-            <header className="flex justify-between items-end p-8 border-b border-border">
+            {/* Cyber Header */}
+            <header className="flex justify-between items-end p-6 md:p-8 border-b border-system-border bg-secondary-bg/50 backdrop-blur-md">
               <div className="flex flex-col">
-                <span className="system-label mb-2">System Status: Fully Operational</span>
+                <span className="system-label mb-2">SYSTEM_STATUS // ONLINE</span>
                 <div className="flex items-center gap-4">
-                  <div className="w-2 h-2 rounded-full bg-accent animate-pulse"></div>
-                  <p className="text-sm font-mono tracking-wider text-text-primary">ASAD_RASHEED.sh — 127.0.0.1:3000</p>
+                  <div className="w-2 h-2 rounded-full bg-accent shadow-[0_0_8px_#00FFFF] animate-pulse"></div>
+                  <p className="text-base font-display tracking-wider text-text-primary text-glow">USER_AUTHENTICATED</p>
                 </div>
               </div>
               <div className="text-right hidden md:block">
-                <span className="system-label mb-2">Current Availability</span>
-                <p className="text-sm font-mono uppercase text-text-primary">Open for internships 2024</p>
+                <span className="system-label mb-2">CURRENT_OBJ</span>
+                <p className="text-base font-display uppercase text-text-primary">SEARCHING_FOR_OPPORTUNITY</p>
               </div>
             </header>
 
@@ -78,22 +81,25 @@ export default function App() {
               <Timeline />
               <Projects />
               <Skills />
+              <CurrentQuest />
+              <Hobbies />
               <AIArsenal />
               <Contact />
             </div>
 
-            {/* Editorial Footer */}
-            <footer className="p-8 border-t border-border grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-secondary-bg">
+            {/* Cyber Footer */}
+            <footer className="p-8 border-t border-system-border grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-secondary-bg/80 backdrop-blur-md">
               <div className="md:col-span-4 flex items-center gap-6">
-                 <a href="#" className="text-xs font-mono hover:text-accent transition-colors text-text-secondary">GITHUB</a>
-                 <a href="#" className="text-xs font-mono hover:text-accent transition-colors text-text-secondary">LINKEDIN</a>
-                 <a href="#" className="text-xs font-mono hover:text-accent transition-colors text-text-secondary">RESUME</a>
+                 <a href="https://github.com/asadrasheed16" target="_blank" rel="noopener noreferrer" className="text-sm font-display hover:text-accent transition-colors text-text-secondary">GITHUB</a>
+                 <a href="https://www.linkedin.com/in/asadrasheed-" target="_blank" rel="noopener noreferrer" className="text-sm font-display hover:text-accent transition-colors text-text-secondary">LINKEDIN</a>
+                 <a href="https://wa.me/qr/HE3URPPYKPB7C1" target="_blank" rel="noopener noreferrer" className="text-sm font-display hover:text-accent transition-colors text-text-secondary">WHATSAPP</a>
+                 <a href="#" className="text-sm font-display hover:text-accent transition-colors text-text-secondary">RESUME</a>
               </div>
               <div className="md:col-span-4 text-center">
-                 <p className="system-label">Located in Pakistan / Serving Globally</p>
+                 <p className="system-label">BASE_CAMP // PK</p>
               </div>
               <div className="md:col-span-4 flex justify-end">
-                 <button className="bg-white text-black px-8 py-3 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-accent hover:text-black transition-colors">GET_IN_TOUCH.exe</button>
+                 <button className="cyber-button">INITIATE_CONTACT</button>
               </div>
             </footer>
           </motion.main>

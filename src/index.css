@@ -1,51 +1,90 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Syne:wght@700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Rajdhani:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Syne", sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-sans: "Rajdhani", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Orbitron", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
 
-  --color-primary-bg: #09090B;
-  --color-secondary-bg: #18181B;
-  --color-tertiary-bg: #27272A;
-  --color-accent: #E2FF4D;
-  --color-text-primary: #FAFAFA;
-  --color-text-secondary: #A1A1AA;
-  --color-border: #27272A;
-  --color-system-border: #3F3F46;
+  /* Cyberpunk Colors */
+  --color-primary-bg: #030712; /* Very dark blue/black */
+  --color-secondary-bg: #0B132B;
+  --color-tertiary-bg: #1C2541;
+  
+  --color-accent: #00FFFF; /* Cyan */
+  --color-text-primary: #E2E8F0;
+  --color-text-secondary: #94A3B8;
+  --color-border: #00FFFF;
+  --color-system-border: #1E293B;
 
-  --color-project-blue: #00D4FF;
-  --color-project-orange: #FF6B35;
-  --color-project-green: #00FF88;
+  --color-project-blue: #00FFFF;
+  --color-project-orange: #FF00FF; /* Neon Pink */
+  --color-project-green: #39FF14;
 }
 
 @layer base {
   body {
-    @apply bg-primary-bg text-text-primary font-sans antialiased selection:bg-accent selection:text-black;
-    cursor: none;
+    @apply bg-primary-bg text-text-primary font-sans antialiased selection:bg-accent selection:text-black text-base;
+    background-image: 
+      linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-display font-bold uppercase tracking-tighter text-text-primary;
+    @apply font-display uppercase tracking-wider text-text-primary;
   }
 }
 
 @layer utilities {
   .glass-card {
-    @apply bg-secondary-bg border border-border transition-all duration-300;
+    @apply bg-secondary-bg/80 backdrop-blur-md border border-system-border transition-all duration-300;
+  }
+
+  .glass-card:hover {
+    @apply border-accent;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
   }
 
   .system-label {
-    @apply text-[10px] uppercase tracking-[0.4em] text-text-secondary/60;
+    @apply font-display text-xs md:text-sm uppercase tracking-widest text-accent font-semibold;
+  }
+
+  .cyber-button {
+    @apply relative bg-transparent text-accent font-display text-sm md:text-base px-6 py-3 border border-accent uppercase cursor-pointer hover:bg-accent hover:text-black transition-all duration-300 font-semibold;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  }
+  
+  .cyber-button:hover {
+    box-shadow: 0 0 15px var(--color-accent);
+  }
+
+  .cyber-panel {
+    @apply bg-black/60 backdrop-blur-lg border border-system-border;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
   }
 
   .text-glow {
-    text-shadow: 0 0 15px currentColor;
+    text-shadow: 0 0 8px currentColor;
   }
 
-  .magnetic-area {
-    @apply relative flex items-center justify-center;
-    transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  .scanlines {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .scanlines::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0) 50%,
+      rgba(0, 0, 0, 0.15) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 50;
+    pointer-events: none;
   }
 }

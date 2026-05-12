@@ -54,7 +54,7 @@ export const fallbackSkills = {
 };
 
 export const fallbackTimeline = [
-  { year: "2024", event: "Healthcare AI FYP completed" },
+  { year: "2024-2026", event: "Healthcare AI FYP completed" },
   { year: "2023", event: "Gumnam Momina launch & scaling" },
   { year: "2023", event: "Backend specialization focus" },
   { year: "2022", event: "Started professional development journey" },
@@ -119,7 +119,8 @@ export const fallbackAIArsenal = [
 
 export const fallbackContact = {
   email: "asadrasheeddev@gmail.com",
-  github: "https://github.com/asadrasheed",
-  linkedin: "https://linkedin.com/in/asadrasheed",
+  github: "https://github.com/asadrasheed16",
+  linkedin: "https://www.linkedin.com/in/asadrasheed-",
+  whatsapp: "https://wa.me/qr/HE3URPPYKPB7C1",
   available: true,
 };
