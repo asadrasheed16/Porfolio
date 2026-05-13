@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 const hobbies = [
   { name: "Badminton", type: "Agility", icon: "🏸", desc: "Smashing shuttlecocks with +10 Agility." },
   { name: "Chess", type: "Strategy", icon: "♟️", desc: "Calculating 5 moves ahead. Checkmate." },
-  { name: "Book Reading", type: "Lore", icon: "📚", desc: "Absorbing ancient knowledge and new skill trees." },
+  { name: "Book Reading", type: "Lore", icon: "📚", desc: "Self building and novels." },
   { name: "Coding", type: "Crafting", icon: "💻", desc: "Building digital artifacts and tools." },
   { name: "Gaming", type: "Recreation", icon: "🎮", desc: "Leveling up in virtual worlds." },
 ];
