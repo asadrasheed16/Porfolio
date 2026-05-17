@@ -61,18 +61,79 @@ export default function App() {
             <ThreeBackground />
             
             {/* Cyber Header */}
-            <header className="flex justify-between items-end p-6 md:p-8 border-b border-system-border bg-secondary-bg/50 backdrop-blur-md">
-              <div className="flex flex-col">
-                <span className="system-label mb-2">SYSTEM_STATUS // ONLINE</span>
-                <div className="flex items-center gap-4">
-                  <div className="w-2 h-2 rounded-full bg-accent shadow-[0_0_8px_#00FFFF] animate-pulse"></div>
-                  <p className="text-base font-display tracking-wider text-text-primary text-glow">USER_AUTHENTICATED</p>
+            <header className="border-b border-system-border bg-secondary-bg/50 backdrop-blur-md">
+              {/* Top status bar */}
+              <div className="flex justify-between items-center px-6 md:px-8 pt-4 pb-3 border-b border-system-border/40">
+                <div className="flex flex-col">
+                  <span className="system-label mb-1">SYSTEM_STATUS // ONLINE</span>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-accent shadow-[0_0_8px_#00FFFF] animate-pulse"></div>
+                    <p className="text-sm font-display tracking-wider text-text-primary text-glow">USER_AUTHENTICATED</p>
+                  </div>
+                  {/* Asad.exe brand */}
+                  <div className="flex items-center gap-2 mt-1">
+                    <span
+                      className="font-display text-2xl md:text-3xl font-bold tracking-widest uppercase"
+                      style={{
+                        color: "#00FFFF",
+                        textShadow: "0 0 12px #00FFFF, 0 0 30px #00FFFF55",
+                        letterSpacing: "0.2em",
+                      }}
+                    >
+                      Asad
+                    </span>
+                    <span
+                      className="font-display text-2xl md:text-3xl font-bold tracking-widest uppercase"
+                      style={{
+                        color: "#FF00FF",
+                        textShadow: "0 0 12px #FF00FF, 0 0 30px #FF00FF55",
+                        letterSpacing: "0.1em",
+                      }}
+                    >
+                      .exe
+                    </span>
+                    <span
+                      className="font-display text-2xl md:text-3xl font-bold animate-pulse"
+                      style={{ color: "#00FFFF", textShadow: "0 0 8px #00FFFF" }}
+                    >
+                      _
+                    </span>
+                  </div>
+                </div>
+                <div className="text-right hidden md:block">
+                  <span className="system-label mb-2">CURRENT_OBJ</span>
+                  <p className="text-base font-display uppercase text-text-primary">SEARCHING_FOR_OPPORTUNITY</p>
                 </div>
               </div>
-              <div className="text-right hidden md:block">
-                <span className="system-label mb-2">CURRENT_OBJ</span>
-                <p className="text-base font-display uppercase text-text-primary">SEARCHING_FOR_OPPORTUNITY</p>
-              </div>
+
+              {/* Navigation Bar */}
+              <nav className="flex items-center justify-center md:justify-start gap-1 md:gap-2 px-4 md:px-8 py-2 overflow-x-auto">
+                {[
+                  { label: "// ABOUT",     href: "#about"     },
+                  { label: "// TIMELINE",  href: "#timeline"  },
+                  { label: "// PROJECTS",  href: "#projects"  },
+                  { label: "// SKILLS",    href: "#skills"    },
+                  { label: "// QUEST",     href: "#quests"    },
+                  { label: "// AI_ARSENAL",href: "#ai-arsenal"},
+                  { label: "// CONTACT",   href: "#contact"   },
+                ].map(({ label, href }) => (
+                  <a
+                    key={href}
+                    href={href}
+                    className="relative group px-3 py-1.5 font-display text-xs tracking-widest text-text-secondary uppercase transition-all duration-200 hover:text-accent whitespace-nowrap"
+                    style={{ textShadow: "none" }}
+                    onMouseEnter={e => {
+                      (e.currentTarget as HTMLElement).style.textShadow = "0 0 8px #00FFFF";
+                    }}
+                    onMouseLeave={e => {
+                      (e.currentTarget as HTMLElement).style.textShadow = "none";
+                    }}
+                  >
+                    {label}
+                    <span className="absolute bottom-0 left-0 h-px w-0 bg-accent transition-all duration-300 group-hover:w-full" />
+                  </a>
+                ))}
+              </nav>
             </header>
 
             <div className="flex-grow">
